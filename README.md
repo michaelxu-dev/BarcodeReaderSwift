@@ -40,7 +40,15 @@ xcodebuild -project BarcodeReaderSwift.xcodeproj -scheme BarcodeReaderSwift \
 ```
 
 If `xcode-select` points at the Command Line Tools rather than Xcode, prefix the command with
-`DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`.
+`DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`. The helper scripts below set this
+themselves.
+
+## Helper scripts
+
+- `run.sh` — build, install, and launch on the iOS Simulator. Uses a booted simulator if there is
+  one, else the newest available iPhone; pass a name to choose (`./run.sh "iPhone 16 Pro"`).
+- `run-dev.sh` — build, install, and launch on the connected iPhone via `xcrun devicectl`.
+- `run-ipa.sh` — archive and export a signed, App Store-ready `.ipa` under team `4DNNKGDUKE`.
 
 ## Structure
 
