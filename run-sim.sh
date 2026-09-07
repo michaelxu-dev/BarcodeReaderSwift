@@ -4,7 +4,7 @@
 # Note: the simulator has no camera, so scanning can't be exercised here --
 # use run-dev.sh on a real device for that. This is for UI work.
 #
-# Pass a simulator name to override the default, e.g. `./run.sh "iPhone 16 Pro"`.
+# Pass a simulator name to override the default, e.g. `./run-sim.sh "iPhone 16 Pro"`.
 
 set -e
 
