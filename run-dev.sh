@@ -35,14 +35,24 @@ try:
     devices = json.load(open(sys.argv[1]))["result"]["devices"]
 except Exception:
     sys.exit(0)
+candidates = []
 for d in devices:
     conn = d.get("connectionProperties", {})
-    if conn.get("tunnelState") != "unavailable" or conn.get("transportType") in ("wired", "localNetwork"):
-        udid = d.get("hardwareProperties", {}).get("udid")
-        name = d.get("deviceProperties", {}).get("name", "iPhone")
-        if udid:
-            print(udid, name)
-            break
+    udid = d.get("hardwareProperties", {}).get("udid")
+    if not udid or conn.get("tunnelState") == "unavailable":
+        continue
+    transport = conn.get("transportType")
+    if transport not in ("wired", "localNetwork"):
+        continue
+    name = d.get("deviceProperties", {}).get("name", "iPhone")
+    # A cabled device beats one merely reachable over Wi-Fi, which may be any
+    # phone that happens to be on the network.
+    candidates.append((0 if transport == "wired" else 1, udid, name))
+
+candidates.sort()
+if candidates:
+    _, udid, name = candidates[0]
+    print(udid, name)
 PY
 )"
   rm -f "$DEVICE_JSON"
